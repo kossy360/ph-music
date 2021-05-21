@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Search result view should render table correctly 1`] = `
+<div
+  aria-label="album list"
+  class="albumsGrid"
+  role="list"
+/>
+`;
