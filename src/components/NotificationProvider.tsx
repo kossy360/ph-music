@@ -15,8 +15,25 @@ const ToastWrapper = styled.div`
   justify-content: center;
   z-index: 1000;
 
+  .Toastify {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .Toastify__toast-container--top-center {
+    left: initial;
+    transform: none;
+
+    @media only screen and (max-width: 480px) {
+      top: 1em;
+    }
+  }
+
   .Toastify__toast-container {
     width: max-content;
+    align-self: center;
   }
 
   .Toastify__toast {
@@ -26,7 +43,7 @@ const ToastWrapper = styled.div`
     width: max-content;
   }
   .Toastify__toast--success {
-    background-color: black;
+    background-color: #000000cc;
 
     .Toastify__toast-body {
       color: #fff;
@@ -34,7 +51,7 @@ const ToastWrapper = styled.div`
     }
   }
   .Toastify__toast--error {
-    background-color: black;
+    background-color: #000000cc;
 
     .Toastify__toast-body {
       color: #fff;
@@ -71,7 +88,7 @@ const NotificationProvider = () => {
         position="top-center"
         transition={Slide}
         closeButton={false}
-        autoClose={3000}
+        autoClose={false}
         closeOnClick
         hideProgressBar
         enableMultiContainer

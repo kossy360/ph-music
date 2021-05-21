@@ -1,6 +1,7 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 import localForage from 'localforage';
+import { tokenManager } from '../../services/httpService';
 import {
   getUserDataService,
   loginUserService,
@@ -38,10 +39,10 @@ export const loginUserAction = createAsyncThunk(
 
       await tokenStore.setItem('data', {
         ...response,
-        expires: Date.now() + response.expires_in * 100,
+        expires: Date.now() + response.expires_in * 999,
       });
-
       dispatch(loginSuccessAction());
+      tokenManager.unblockRequests();
     } catch (error) {
       const message = 'An error occurred while logging you in';
 
@@ -64,10 +65,11 @@ export const refreshUserTokenAction = createAsyncThunk(
 
       await tokenStore.setItem('data', {
         ...response,
-        expires: Date.now() + response.expires_in * 100,
+        expires: Date.now() + response.expires_in * 999,
         refresh_token: token,
       });
       dispatch(loginSuccessAction());
+      tokenManager.unblockRequests();
     } catch (error) {
       if (
         error.isAxiosError &&
