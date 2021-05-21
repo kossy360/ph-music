@@ -74,6 +74,13 @@ export const createAndAddItemsToPlaylistService = async (
     }
   );
 
+  // introducing a little delay here to compensate delayed change propagation
+  await new Promise((res) =>
+    setTimeout(() => {
+      res(true);
+    }, 1000)
+  );
+
   await authHttp.post<{ snapshot_id: string }>(
     `playlists/${newPlaylist.data.id}/tracks`,
     {

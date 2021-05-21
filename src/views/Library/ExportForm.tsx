@@ -121,28 +121,6 @@ const ExportForm = () => {
       </PlainButton>
       <ModalContainer open={isOpen}>
         <div className="modalContent">
-          <div className="header">
-            <Typography textStyle="sm18">Export Library</Typography>
-            <PlainButton
-              aria-label="close form"
-              onClick={() => setIsOpen(false)}
-            >
-              <Icon
-                icon={xIcon}
-                height={'1.5rem'}
-                color={theme.text.colors.primary}
-              />
-            </PlainButton>
-          </div>
-          <div className="formDescription">
-            <Typography
-              textColor="primary600"
-              textStyle="sm12"
-              textAlign="center"
-            >
-              Export tracks in your library to a new spotify playlist
-            </Typography>
-          </div>
           <Formik
             initialValues={initialFormData}
             validationSchema={validationSchema}
@@ -152,37 +130,64 @@ const ExportForm = () => {
               setIsOpen(false);
             }}
           >
-            <Form aria-label="export to library form" className="formContent">
-              <div className="inputContainer">
-                <Field
-                  name="name"
-                  className="formInput"
-                  placeholder="Playlist name (required)"
-                />
-                <ErrorMessage name="name">
-                  {(msg) => (
-                    <Typography textStyle="sm12" style={{ color: 'red' }}>
-                      {msg}
-                    </Typography>
+            <>
+              <div className="header">
+                <Typography textStyle="sm18">Export Library</Typography>
+                <PlainButton
+                  aria-label="close form"
+                  onClick={() => {
+                    setIsOpen(false);
+                    exportLibrary.reset();
+                  }}
+                >
+                  <Icon
+                    icon={xIcon}
+                    height={'1.5rem'}
+                    color={theme.text.colors.primary}
+                  />
+                </PlainButton>
+              </div>
+              <div className="formDescription">
+                <Typography
+                  textColor="primary600"
+                  textStyle="sm12"
+                  textAlign="center"
+                >
+                  Export tracks in your library to a new spotify playlist
+                </Typography>
+              </div>
+              <Form aria-label="export to library form" className="formContent">
+                <div className="inputContainer">
+                  <Field
+                    name="name"
+                    className="formInput"
+                    placeholder="Playlist name (required)"
+                  />
+                  <ErrorMessage name="name">
+                    {(msg) => (
+                      <Typography textStyle="sm12" style={{ color: 'red' }}>
+                        {msg}
+                      </Typography>
+                    )}
+                  </ErrorMessage>
+                </div>
+                <div className="inputContainer">
+                  <Field
+                    as="textarea"
+                    name="description"
+                    className="formInput"
+                    placeholder="Short description (optional)"
+                  />
+                </div>
+                <button type="submit" className="submitButton">
+                  {exportLibrary.isLoading ? (
+                    <CircularProgress size={16} />
+                  ) : (
+                    <Typography textColor="accent">Export</Typography>
                   )}
-                </ErrorMessage>
-              </div>
-              <div className="inputContainer">
-                <Field
-                  as="textarea"
-                  name="description"
-                  className="formInput"
-                  placeholder="Short description (optional)"
-                />
-              </div>
-              <button type="submit" className="submitButton">
-                {exportLibrary.isLoading ? (
-                  <CircularProgress size={16} />
-                ) : (
-                  <Typography textColor="accent">Export</Typography>
-                )}
-              </button>
-            </Form>
+                </button>
+              </Form>
+            </>
           </Formik>
         </div>
       </ModalContainer>
